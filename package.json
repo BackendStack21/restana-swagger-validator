@@ -1,0 +1,33 @@
+{
+  "name": "restana-swagger-validator",
+  "version": "0.1.0",
+  "description": "High performance Swagger/OpenAPI validator middleware for Restana",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha tests/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BackendStack21/restana-swagger-validator.git"
+  },
+  "keywords": [
+    "swagger",
+    "openapi",
+    "restana",
+    "middleware",
+    "http"
+  ],
+  "author": "Rolando Santamaria Maso <kyberneees@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BackendStack21/restana-swagger-validator/issues"
+  },
+  "homepage": "https://github.com/BackendStack21/restana-swagger-validator#readme",
+  "dependencies": {
+    "api-schema-builder": "^2.0.5",
+    "body-parser": "^1.19.0"
+  },
+  "devDependencies": {
+    "restana": "^4.9.1"
+  }
+}
