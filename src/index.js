@@ -70,8 +70,8 @@ function validate (req, schema) {
   )
 }
 
-function SwaggerValidator (app, path, options = {}) {
-  const spec = require(path)
+function SwaggerValidator (app, spec, options = {}) {
+  spec = typeof spec === 'string' ? require(spec) : spec
 
   options = Object.assign({
     buildRequests: true,

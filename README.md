@@ -1,6 +1,11 @@
 # restana-swagger-validator
 Swagger/OpenAPI validation middleware that uses the "api-schema-builder" module.
 
+```js
+SwaggerValidator(app: restana, spec: string | Object, config: Object)
+```
+> NOTE: When the `spec` argument is type of "string", `require(spec)` is used to lookup the Swagger specification. Only JSON format is supported at the moment.
+
 ## Configuration options
 - `buildRequests`: If TRUE, request validation schemas will be parsed and cached for use. Default value: `TRUE`
 - `buildResponses`: If TRUE, response validation schemas will be parsed and cached for use. Default value: `TRUE`
