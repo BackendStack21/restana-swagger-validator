@@ -124,8 +124,9 @@ function SwaggerValidator (app, spec, options = {}) {
                 if (options.requireSchemaSpec && !endpointSchema) {
                   throw new SwaggerSchemaNotFound(path, method, 'response')
                 }
+                const responseType = res.getHeader('content-type') || ''
                 const isValid = endpointSchema.validate({
-                  body: res.getHeader('content-type').startsWith('application/json') ? JSON.parse(data) : data,
+                  body: responseType.startsWith('application/json') ? JSON.parse(data) : data,
                   headers: res.getHeaders()
                 })
 
