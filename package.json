@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/BackendStack21/restana-swagger-validator#readme",
   "dependencies": {
-    "api-schema-builder": "^2.0.5"
+    "api-schema-builder": "^2.0.9"
   },
   "files": [
     "LICENSE",
