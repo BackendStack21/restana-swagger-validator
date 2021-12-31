@@ -1,6 +1,8 @@
 # restana-swagger-validator
 Swagger/OpenAPI validation middleware that uses the "api-schema-builder" module.
 
+![Performance Benchmarks](performance-benchmark.png)
+
 ```js
 SwaggerValidator(app: restana, spec: string | Object, config: Object)
 ```
@@ -53,6 +55,4 @@ app.start()
 
 ## TODOs
 - Unit tests
-- Documentation
-- Performance Benchmarks 
 
