@@ -1,0 +1,43 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Example API",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/example": {
+        "get": {
+          "summary": "Returns an object with the provided name",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "description": "The name to be included in the response object",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Object with the provided name",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
