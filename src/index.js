@@ -32,18 +32,14 @@ class SwaggerSchemaNotFound extends SwaggerValidationError {
 }
 
 function validateParameters ({ query, headers, params, files }, schema) {
-  if (schema.parameters) {
-    schema.parameters.validate({
-      query,
-      headers,
-      path: params,
-      files
-    })
+  schema.parameters.validate({
+    query,
+    headers,
+    path: params,
+    files
+  })
 
-    return schema.parameters.errors || []
-  }
-
-  return []
+  return schema.parameters.errors || []
 }
 
 function getContentType ({ 'content-type': contentType }) {
@@ -71,10 +67,7 @@ function validate (req, schema) {
 }
 
 function SwaggerValidator (app, spec, options = {}) {
-  spec = typeof spec === 'string' ? require(spec) : spec
-
-  options = Object.assign({
-    buildRequests: true,
+  app.swaggerValidatorOptions = options = Object.assign({
     buildResponses: true,
     requireSchemaSpec: true,
     apiSpecEndpoint: '/swagger.json',
@@ -82,7 +75,14 @@ function SwaggerValidator (app, spec, options = {}) {
     publicApiEndpoint: 'http://localhost:3000'
   }, options)
 
-  const schema = apiSchemaBuilder.buildSchemaSync(spec, options)
+  let schema
+  try {
+    spec = typeof spec === 'string' ? require(spec) : spec
+    schema = apiSchemaBuilder.buildSchemaSync(spec, options)
+  } catch (err) {
+    throw new Error(`Invalid OpenAPI specification was provided "${err.message}"`)
+  }
+
   const uiHtml = getSwaggerUi(options.publicApiEndpoint + options.apiSpecEndpoint)
 
   app.get(options.uiEndpoint, (_, res) => {
@@ -106,24 +106,22 @@ function SwaggerValidator (app, spec, options = {}) {
       const endpointSchema = schema[path][method]
 
       args.splice(1, 0, (req, res, next) => {
-        try {
-          req.swagger = {
-            schema: endpointSchema
-          }
-          const errors = validate(req, endpointSchema)
-          if (errors.length) {
-            return next(new RequestValidationError(errors))
-          } else {
-            if (options.buildResponses) {
-              const _end = res.end
+        const errors = validate(req, endpointSchema)
+        if (errors.length) {
+          return next(new RequestValidationError(errors))
+        } else {
+          if (options.buildResponses) {
+            const _end = res.end
 
-              res.end = (data, cb) => {
-                res.end = _end
+            res.end = (data, cb) => {
+              res.end = _end
 
-                const endpointSchema = schema[path][method].responses[res.statusCode]
-                if (options.requireSchemaSpec && !endpointSchema) {
-                  throw new SwaggerSchemaNotFound(path, method, 'response')
-                }
+              const endpointSchema = schema[path][method].responses[res.statusCode]
+              if (options.requireSchemaSpec && !endpointSchema && data) {
+                throw new SwaggerSchemaNotFound(path, method, 'response')
+              }
+
+              if (endpointSchema) {
                 const responseType = res.getHeader('content-type') || ''
                 const isValid = endpointSchema.validate({
                   body: responseType.startsWith('application/json') ? JSON.parse(data) : data,
@@ -132,16 +130,14 @@ function SwaggerValidator (app, spec, options = {}) {
 
                 if (!isValid) {
                   throw new ResponseValidationError(endpointSchema.errors)
-                } else {
-                  res.end(data, cb)
                 }
               }
-            }
 
-            return next()
+              res.end(data, cb)
+            }
           }
-        } catch (err) {
-          return next(err)
+
+          return next()
         }
       })
     }
@@ -216,5 +212,6 @@ module.exports = {
   SwaggerValidationError,
   SwaggerValidator,
   RequestValidationError,
-  ResponseValidationError
+  ResponseValidationError,
+  getSwaggerUi
 }
