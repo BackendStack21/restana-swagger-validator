@@ -1,6 +1,6 @@
 {
   "name": "restana-swagger-validator",
-  "version": "0.1.4",
+  "version": "v1.0.0",
   "description": "High performance Swagger/OpenAPI validator middleware for Restana",
   "main": "src/index.js",
   "scripts": {
