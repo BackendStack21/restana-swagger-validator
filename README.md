@@ -1,4 +1,12 @@
 # restana-swagger-validator
+[![NPM version](https://badgen.net/npm/v/restana-swagger-validator)](https://www.npmjs.com/package/restana-swagger-validator)
+[![NPM Total Downloads](https://badgen.net/npm/dt/restana-swagger-validator)](https://www.npmjs.com/package/restana-swagger-validator)
+[![License](https://badgen.net/npm/license/restana-swagger-validator)](https://www.npmjs.com/package/restana-swagger-validator)
+[![TypeScript support](https://badgen.net/npm/types/restana-swagger-validator)](https://www.npmjs.com/package/restana-swagger-validator)
+[![Github stars](https://badgen.net/github/stars/jkyberneees/restana-swagger-validator?icon=github)](https://github.com/jkyberneees/restana-swagger-validator)
+
+<img src="logo.svg" width="400">  
+
 Validating REST APIs using OpenAPI (formerly known as Swagger) specifications is crucial to ensure that the API complies with the standard set by the specification. OpenAPI validation helps in maintaining a consistent design, improving API usability, and providing a way for developers to quickly and easily understand the functionality and expected inputs and outputs of an API.  
 
 However, API validators are required to be fast, particularly in the context of REST APIs, where response time is a critical performance factor. A validation process that adds significant overhead can cause the API to become slow and unresponsive, resulting in a poor user experience for clients.
