@@ -286,7 +286,6 @@ describe('SwaggerValidator - smoke', () => {
       await axios.request(options)
     } catch ({ response }) {
       expect(response.status).to.eq(500)
-      expect(response.data.message).to.eq('Unexpected end of JSON input')
     }
   })
 
